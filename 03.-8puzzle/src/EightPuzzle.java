@@ -4,30 +4,43 @@ public class EightPuzzle {
     public static void main(String[] args) {
         EightPuzzle puzzleSolver = new EightPuzzle();
         Scanner scanner = new Scanner(System.in);
-        String initialState = "807625341";
+        String State1 = "807625341";
+        String State2 = "678503421";
+        String State3 = "567801234";
 
-        System.out.println("Choose one kind of search: ");
-        System.out.println("1.- Breadth First Search");
-        System.out.println("2.- Depth First Search");
+        String initialState = State3;
 
-        int choice = scanner.nextInt();
-        switch (choice){
-            case 1:
-                long startTimeBFS = System.currentTimeMillis();
-                puzzleSolver.solvePuzzleBFS(initialState);
-                long endTimeBFS = System.currentTimeMillis();
-                long elapsedTimeBFS = endTimeBFS - startTimeBFS;
-                System.out.println("Breadth First Search Elapsed time: " + elapsedTimeBFS + " milliseconds");
-                break;
-            case 2:
-                long startTimeDFS = System.currentTimeMillis();
-                puzzleSolver.solvePuzzleDFS(initialState);
-                long endTimeDFS = System.currentTimeMillis();
-                long elapsedTimeDFS = endTimeDFS - startTimeDFS;
-                System.out.println("Depth First Search Elapsed time: " + elapsedTimeDFS + " milliseconds");
-                break;
-            default:
-                System.out.println("Invalid option");
+        int choice = 0;
+
+        while (choice != 3) {
+            System.out.println("Choose one kind of search: ");
+
+            System.out.println("1.- Breadth First Search");
+            System.out.println("2.- Depth First Search");
+            System.out.println("3.- Exit");
+
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    long startTimeBFS = System.currentTimeMillis();
+                    puzzleSolver.solvePuzzleBFS(initialState);
+                    long endTimeBFS = System.currentTimeMillis();
+                    long elapsedTimeBFS = endTimeBFS - startTimeBFS;
+                    System.out.println("Breadth First Search Elapsed time: " + elapsedTimeBFS + " milliseconds");
+                    break;
+                case 2:
+                    long startTimeDFS = System.currentTimeMillis();
+                    puzzleSolver.solvePuzzleDFS(initialState);
+                    long endTimeDFS = System.currentTimeMillis();
+                    long elapsedTimeDFS = endTimeDFS - startTimeDFS;
+                    System.out.println("Depth First Search Elapsed time: " + elapsedTimeDFS + " milliseconds");
+                    break;
+                case 3:
+                    System.out.println("See you later");
+                    break;
+                default:
+                    System.out.println("Invalid option");
+            }
         }
     }
     public void solvePuzzleBFS(String initialState) {
@@ -80,7 +93,6 @@ public class EightPuzzle {
                 }
             }
         }
-
         System.out.println("No solution found");
     }
 
@@ -119,15 +131,20 @@ public class EightPuzzle {
     private void printSolution(Node goalNode) {
         Stack<String> path = new Stack<>();
         Node current = goalNode;
+        int moveCount = 0;
+
 
         while (current != null) {
             path.push(current.state);
             current = current.parent;
+            moveCount++;
         }
 
         while (!path.isEmpty()) {
             System.out.println(format(path.pop()));
         }
+
+        System.out.println("Total moves: "+ moveCount);
     }
 
     private String format(String state) {
